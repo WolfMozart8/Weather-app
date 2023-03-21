@@ -1,6 +1,6 @@
 const input = document.getElementById("input");
 const btn = document.getElementById("button");
-const main = document.querySelector("main");
+const main = document.getElementById("main-info");
 
 function getWeather() {
   const city = input.value;
@@ -23,24 +23,59 @@ btn.addEventListener("click", getWeather);
 function createDom(obj) {
   const title = document.createElement("div");
   const name = document.createElement("h2");
-  console.log(obj.name + ", " + countryList[obj.sys.country]);
+  console.log(obj.name + ", " + countryList[obj.sys.country]); //logs country name + city
 
+  // create html elements
   const weatherInfoDiv = document.createElement("div");
     const description = document.createElement('p');
     const weatherMain = document.createElement('p');
     const weatherIcon = document.createElement('img');
-    
+
   const tempDiv = document.createElement("div");
     const temp = document.createElement('p');
     const tempFeel = document.createElement('p');
     const tempMin = document.createElement('p');
     const tempMax = document.createElement('p');
-    
+
   const windDiv = document.createElement('div');
     const wind = document.createElement('p');
     const windDeg = document.createElement('p');
-    
-  
+
+  // add classes
+  // add content
+  name.textContent = obj.name + ", " + countryList[obj.sys.country]; //logs country name + city
+
+  description.textContent = obj.weather[0].description;
+  weatherMain.textContent = obj.weather[0].main;
+  weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`);
+
+  temp.textContent = obj.main.temp;
+  tempFeel.textContent = obj.main.feels_like;
+  tempMin.textContent = obj.main.temp_min;
+  tempMax.textContent = obj.main.temp_max;
+
+  wind.textContent = obj.wind.speed;
+  windDeg.textContent = obj.wind.deg;
+  // create dom and append to #main
+  // title
+  title.appendChild(name);
+  // info
+  weatherInfoDiv.appendChild(description);
+  weatherInfoDiv.appendChild(weatherMain);
+  weatherInfoDiv.appendChild(weatherIcon);
+  // temp
+  tempDiv.appendChild(temp);
+  tempDiv.appendChild(tempFeel);
+  tempDiv.appendChild(tempMin);
+  tempDiv.appendChild(tempMax);
+  // wind
+  windDiv.appendChild(wind);
+  windDiv.appendChild(windDeg);
+  // append to main
+  main.appendChild(title);
+  main.appendChild(weatherInfoDiv);
+  main.appendChild(tempDiv);
+  main.appendChild(windDiv);
 }
 
 const countryList = {
