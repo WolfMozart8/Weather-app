@@ -1,0 +1,17 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title-container {
+    background-color: rgba(255, 55, 55, .5);
+}
+.info-container {
+    background-color: rgba(10, 255, 55, .5);
+}
+.temp-container {
+    background-color: rgba(55, 55, 233, .5);
+}
+.wind-container {
+    background-color: rgba(160, 170, 170, .5);
+}

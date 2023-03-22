@@ -21,38 +21,55 @@ btn.addEventListener("click", getWeather);
 // api: f04a9ad6de818a0435fb8d067c259bf0
 
 function createDom(obj) {
+  const weatherContainer = document.querySelector(".weather-container");
+  if (weatherContainer){
+    weatherContainer.remove();
+  }
+
   const title = document.createElement("div");
   const name = document.createElement("h2");
   console.log(obj.name + ", " + countryList[obj.sys.country]); //logs country name + city
 
   // create html elements
+  const weather = document.createElement('div');
+
   const weatherInfoDiv = document.createElement("div");
     const description = document.createElement('p');
     const weatherMain = document.createElement('p');
     const weatherIcon = document.createElement('img');
 
   const tempDiv = document.createElement("div");
+    const tempTitle = document.createElement('h2');    
     const temp = document.createElement('p');
     const tempFeel = document.createElement('p');
     const tempMin = document.createElement('p');
     const tempMax = document.createElement('p');
 
   const windDiv = document.createElement('div');
+    const windTitle = document.createElement('h2');
     const wind = document.createElement('p');
     const windDeg = document.createElement('p');
 
   // add classes
+  weather.classList.add("weather-container");
+  title.classList.add("title-container");
+  weatherInfoDiv.classList.add("info-container");
+  tempDiv.classList.add("temp-container");
+  windDiv.classList.add("wind-container");
   // add content
+  tempTitle.textContent = "Temp";
+  windTitle.textContent = "Wind";
+
   name.textContent = obj.name + ", " + countryList[obj.sys.country]; //logs country name + city
 
   description.textContent = obj.weather[0].description;
   weatherMain.textContent = obj.weather[0].main;
   weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png`);
 
-  temp.textContent = obj.main.temp;
-  tempFeel.textContent = obj.main.feels_like;
-  tempMin.textContent = obj.main.temp_min;
-  tempMax.textContent = obj.main.temp_max;
+  temp.textContent = obj.main.temp + "°";
+  tempFeel.textContent = obj.main.feels_like + "°";
+  tempMin.textContent = obj.main.temp_min + "°";
+  tempMax.textContent = obj.main.temp_max + "°";
 
   wind.textContent = obj.wind.speed;
   windDeg.textContent = obj.wind.deg;
@@ -64,18 +81,21 @@ function createDom(obj) {
   weatherInfoDiv.appendChild(weatherMain);
   weatherInfoDiv.appendChild(weatherIcon);
   // temp
+  tempDiv.appendChild(tempTitle);
   tempDiv.appendChild(temp);
   tempDiv.appendChild(tempFeel);
   tempDiv.appendChild(tempMin);
   tempDiv.appendChild(tempMax);
   // wind
+  windDiv.appendChild(windTitle);
   windDiv.appendChild(wind);
   windDiv.appendChild(windDeg);
   // append to main
-  main.appendChild(title);
-  main.appendChild(weatherInfoDiv);
-  main.appendChild(tempDiv);
-  main.appendChild(windDiv);
+  weather.appendChild(title);
+  weather.appendChild(weatherInfoDiv);
+  weather.appendChild(tempDiv);
+  weather.appendChild(windDiv);
+  main.appendChild(weather);
 }
 
 const countryList = {
