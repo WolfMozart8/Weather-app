@@ -2,6 +2,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #0F2027;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 .title-container {
     background-color: rgba(255, 55, 55, .5);
@@ -14,4 +18,56 @@ body {
 }
 .wind-container {
     background-color: rgba(160, 170, 170, .5);
+}
+
+#loading {
+    display: none;
+}
+/* INPUT */
+form {
+    position: relative;
+    display: inline-block;
+}
+#input {
+    text-align: center;
+    width: 20rem;
+    border-radius: 10px;
+    height: 40px;
+    padding-right: 40px;
+}
+#button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 40px;
+    border: none;
+    background: url(./img/search-icon.svg);
+}
+#button:hover {
+cursor: pointer;
+}
+#button img {
+    width: 100%;
+}
+/* WEATHER  */
+.bg {
+    background-color: aqua;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+}
+.sun {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    background-color: yellow;
+}
+.mountain-1 {
+    width: 15rem;
+    height: 15rem;
+    background-color: green;
 }

@@ -9,13 +9,22 @@
   </head>
   <body>
     <form>
-      <label for="input">Country</label>
       <input id="input" type="text" placeholder="Select City" />
-      <button id="button" type="button">Search</button>
+      <button id="button" type="button">
+        <img src="/img/search-icon.svg" alt="search icon">
+      </button>
     </form>
     <main>
+      <div id="loading">Loading...</div>
       <div id="main-info"></div>
     </main>
+    <!-- <div class="bg">
+      <div class="sun"></div>
+      <div class="mountains">
+        <div class="mountain-1"></div>
+        <div class="mountain-2"></div>
+      </div>
+    </div> -->
     <script src="./index.js"></script>
   </body>
 </html>

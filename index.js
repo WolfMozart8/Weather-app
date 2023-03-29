@@ -1,13 +1,16 @@
 const input = document.getElementById("input");
 const btn = document.getElementById("button");
 const main = document.getElementById("main-info");
+const loading = document.getElementById("loading");
 
 function getWeather() {
   const city = input.value;
-
+  loading.style.display = "block";
+  loading.style.backgroundColor = "red";
   const getInfo = fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=f04a9ad6de818a0435fb8d067c259bf0&units=metric`
   );
+  loading.style.display = "none";
 
   getInfo
     .then((res) => res.json())
@@ -25,9 +28,12 @@ function createDom(obj) {
   if (weatherContainer){
     weatherContainer.remove();
   }
+  if (noCity(obj)) {
+    return
+  }
 
   const title = document.createElement("div");
-  const name = document.createElement("h2");
+  const name = document.createElement("h1");
   console.log(obj.name + ", " + countryList[obj.sys.country]); //logs country name + city
 
   // create html elements
@@ -96,6 +102,23 @@ function createDom(obj) {
   weather.appendChild(tempDiv);
   weather.appendChild(windDiv);
   main.appendChild(weather);
+}
+
+function noCity (obj) {
+  if (obj.cod == "404") {
+    const weather = document.createElement('div');
+    const msg = document.createElement("h1");
+    msg.textContent = obj.message;
+    weather.classList.add("weather-container");
+
+    weather.appendChild(msg);
+    main.appendChild(weather);
+
+    return true
+  } else {
+    console.log("No problems found");
+    return false
+  }
 }
 
 const countryList = {
