@@ -1,3 +1,7 @@
+:root {
+    --width-xl: 800px;
+}
+
 body {
     display: flex;
     flex-direction: column;
@@ -9,40 +13,74 @@ background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+
 }
 main {
     position: absolute;
-    max-width: 100%;
+    width: 100%;
     max-height: 100vh;
+    z-index: -10;
 }
 #main-info {
     width: 100%;
     height: 100%;
 
-    padding-top: 200px;
+    padding-top: 10%;
 }
 .weather-container {
     display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 30%);
     grid-template-areas: 
                         "title title title title"
-                        ". . . ."
-                        "info . . temp"
-                        "info . . wind";
+                        "info info temp temp"
+                        "info info wind wind";
+
+    width: var(--width-xl);
+    height: calc(var(--width-xl) / 2);
+    margin: 0 auto;
 }
 .title-container {
     width: 100%;
-    font-size: 2rem;
-    height: 86px;
+    font-size: 1.2rem;
     text-align: center;
 
-    grid-area: "title";
-    grid-template-columns: repeat(4, 1fr);
+    grid-area: title;
 }
 .info-container {
-    grid-area: "info";
+    grid-area: info;
+    z-index: -1;
+    grid-row: 1/4;
+
 }
+/* temp */
 .temp-container {
-    grid-area: "temp";
+    grid-area: temp;
+    display: flex;
+    align-items: center;
 }
+.temp-info-div {
+    flex: 1;
+    text-align: right;
+}
+.temp-icon-div {
+    flex: 1;
+}
+.temp-icon-div i {
+    font-size: 3rem;
+}
+/* wind */
 .wind-container {
-    grid-area: "wind";
+    grid-area: wind;
+    display: flex;
+    align-items: center;
+}
+.wind-info-div {
+    flex: 1;
+    text-align: left;
+}
+.wind-icon-div {
+    flex: 1;
+    text-align: right;
+}
+.wind-icon-div i {
+    font-size: 3rem;
 }
 
 #loading {
