@@ -5,22 +5,48 @@ const main = document.getElementById("main-info");
 const loading = document.getElementById("loading");
 
 function getWeather() {
+  if (input.value === "") {
+    return
+  }
   const city = input.value;
-  loading.style.display = "block";
-  loading.style.backgroundColor = "red";
+  const weatherContainer = document.querySelector(".weather-container");
+  if (weatherContainer){
+    weatherContainer.remove();
+  }
+  loading.classList.add("active");
+
   const getInfo = fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=f04a9ad6de818a0435fb8d067c259bf0&units=metric`
   );
-  loading.style.display = "none";
 
   getInfo
     .then((res) => res.json())
     .then((res) => {
       console.log(res);
+
+      fetch(`https://openweathermap.org/img/wn/${res.weather[0].icon}@4x.png`)
+        .then(res => console.log(res))
       createDom(res);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err)
+      loading.classList.remove("active");
+      const weather = document.createElement('div');
+      const msg = document.createElement("h1");
+      msg.textContent = "Please select a valid city";
+      msg.classList.add("error-msg");
+      weather.classList.add("weather-container");
+  
+      weather.appendChild(msg);
+      main.appendChild(weather);});
 }
+
+window.addEventListener("keydown", (e) => {
+  if (e.keyCode === 13 && input.value != "") {
+    getWeather();
+  }
+})
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 })
@@ -29,11 +55,19 @@ btn.addEventListener("click", getWeather);
 
 
 function createDom(obj) {
-  const weatherContainer = document.querySelector(".weather-container");
-  if (weatherContainer){
-    weatherContainer.remove();
-  }
-  if (noCity(obj)) {
+
+  loading.classList.remove("active");
+  console.log(obj.cod)
+
+  if (obj.cod >= "400") {
+    console.log("NOOOOOOOOOO");
+    const weather = document.createElement('div');
+    const msg = document.createElement("h1");
+    msg.textContent = obj.message;
+    weather.classList.add("weather-container");
+
+    weather.appendChild(msg);
+    main.appendChild(weather);
     return
   }
 
@@ -84,9 +118,9 @@ function createDom(obj) {
   name.textContent = obj.name + ", " + countryList[obj.sys.country]; //logs country name + city
 
   description.textContent = obj.weather[0].description;
-  weatherMain.textContent = obj.weather[0].main;
+  // weatherMain.textContent = obj.weather[0].main;
   weatherInfoDiv.setAttribute( // add image to background by inline-css
-    "style", `background: url('https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png');
+    "style", `background: url('https://openweathermap.org/img/wn/${obj.weather[0].icon}@4x.png');
     background-repeat: no-repeat;
     background-size: cover;`);
 
@@ -96,14 +130,14 @@ function createDom(obj) {
   // tempMin.textContent = obj.main.temp_min + "°";
   // tempMax.textContent = obj.main.temp_max + "°";
 
-  wind.textContent = obj.wind.speed + "km/h";
+  wind.textContent = obj.wind.speed + "m/h";
   // windDeg.textContent = obj.wind.deg;
   // create dom and append to #main
   // title
   title.appendChild(name);
   // info
   weatherInfoDiv.appendChild(description);
-  weatherInfoDiv.appendChild(weatherMain);
+  // weatherInfoDiv.appendChild(weatherMain);
   // weatherInfoDiv.appendChild(weatherIcon);
   // temp
   tempInfoDiv.appendChild(temp);
@@ -119,8 +153,8 @@ function createDom(obj) {
   // wind
   windInfoDiv.appendChild(wind);
   windIconDiv.appendChild(windIcon);
-  windDiv.appendChild(windIconDiv);
   windDiv.appendChild(windInfoDiv);
+  windDiv.appendChild(windIconDiv);
   // append to main
   weather.appendChild(title);
   weather.appendChild(weatherInfoDiv);
@@ -131,14 +165,7 @@ function createDom(obj) {
 
 function noCity (obj) {
   if (obj.cod == "404") {
-    const weather = document.createElement('div');
-    const msg = document.createElement("h1");
-    msg.textContent = obj.message;
-    weather.classList.add("weather-container");
-
-    weather.appendChild(msg);
-    main.appendChild(weather);
-
+    console.log("We have an error");
     return true
   } else {
     console.log("No problems found");

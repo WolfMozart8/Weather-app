@@ -1,5 +1,12 @@
 :root {
     --width-xl: 800px;
+    --font-main: 'Montserrat', sans-serif;
+    --font-normal: 'Changa One', cursive;
+
+    --color-main: #cecece;
+    --color-temp: rgb(255, 0, 0);
+    --color-wind: rgb(19, 209, 174);
+
 }
 
 body {
@@ -10,6 +17,10 @@ body {
 background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
 background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+}
+body {
+    font-family: var(--font-normal);
+    color: var(--color-main);
 }
 main {
     position: absolute;
@@ -37,17 +48,27 @@ main {
     margin: 0 auto;
 }
 .title-container {
+    font-family: var(--font-main);
     width: 100%;
     font-size: 1.2rem;
     text-align: center;
 
     grid-area: title;
+    color: white;
 }
 .info-container {
     grid-area: info;
     z-index: -1;
     grid-row: 1/4;
 
+}
+.info-container p {
+    position: relative;
+    bottom: -260px;
+    left: 0px;
+    text-align: center;
+
+    font-size: 2rem;
 }
 /* temp */
 .temp-container {
@@ -61,6 +82,8 @@ main {
 }
 .temp-icon-div {
     flex: 1;
+    margin-left: 30px;
+    color: var(--color-temp);
 }
 .temp-icon-div i {
     font-size: 3rem;
@@ -73,18 +96,51 @@ main {
 }
 .wind-info-div {
     flex: 1;
-    text-align: left;
+    text-align: right;
 }
 .wind-icon-div {
     flex: 1;
-    text-align: right;
+    margin-left: 30px;
+    color: var(--color-wind);
+
 }
 .wind-icon-div i {
     font-size: 3rem;
 }
-
+    /* loading */
 #loading {
     display: none;
+}
+
+#loading.active {
+    display: block;
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 200px;
+}
+#loading::before {
+    content: "";
+    animation: loading 0.5s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        content: ".";
+    }
+    50% {
+        content: "..";
+    }
+    100% {
+        content: "...";
+    }
+}
+/* error */
+.error-msg {
+    grid-column: 1/5;
+    color: white;
+    font-size: 6rem;
+    display: block;
+    text-align: center;
 }
 /* INPUT */
 form {
